@@ -16,12 +16,10 @@ int main() {
     vector<int> dragoncurve;
 
     for (unsigned int i = 0; i < cycles; i++) {
-        cout << "Cycle: " << i+1 << endl;
         paperfold(dragoncurve);
-        printvector(dragoncurve);
     }
 
-    // Test for correctness!
+    printvector(dragoncurve);
 
     return 0;
 }
@@ -30,12 +28,12 @@ int main() {
 void paperfold(vector<int>& dragoncurve) {
     int insertBit = 0;
 
-    for (unsigned int j = 0; j < dragoncurve.size(); j += 2){
-        if (j % 4 == 0) //need to alternate between 0s and 1s. start with 1.
+    for (unsigned int j = 0; j*2 < dragoncurve.size(); j++){
+        if (j % 2 == 0) //need to alternate between 0s and 1s. start with 1.
             insertBit = 1;
         else
             insertBit = 0;    
-        dragoncurve.insert(dragoncurve.begin()+j, insertBit);
+        dragoncurve.insert(dragoncurve.begin()+j*2, insertBit); //j*2 to skip previously modified index
     }
     dragoncurve.push_back(abs(insertBit-1)); // insert the opposite of the last bit at the end.
 }
@@ -43,13 +41,12 @@ void paperfold(vector<int>& dragoncurve) {
 
 void printvector(vector<int>& myVector) {
 
-    cout << "Vector: ";
-
     for (unsigned int index = 0; index < myVector.size(); index++){
         cout << myVector[index];
         if (index % 30 == 0 && index > 0){
             cout << endl;
         }
     }
+    
     cout << endl;
 }
